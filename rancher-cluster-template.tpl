@@ -88,7 +88,7 @@ addons: |-
       nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"   # Max time in seconds for ws to remain shell window open
   spec:
     rules:
-    - host: rancherv4.greensill.cloud
+    - host: ${rancher-url}
       http:
         paths:
         - backend:

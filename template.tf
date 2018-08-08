@@ -11,7 +11,8 @@ data "template_file" "rancher" {
 	FQDNS = "${var.route53-name}"                             # A record name from route53 for RKE to use
 	key-path = "${var.rancher-key-path}"                          # path to the pem file
 	rancher-pkey = "${base64encode(tls_private_key.p-key.private_key_pem)}"                          # private key
-	rancher-pcert = "${base64encode(tls_self_signed_cert.cert.cert_pem)}"                          # self signed cert
+	rancher-pcert = "${base64encode(tls_self_signed_cert.cert.cert_pem)}"      	# self signed cert
+	rancher-url = "${var.route53-name}"     # self signed cert url
   }
  depends_on = ["tls_private_key.p-key",]                       # depends on cert and python 
   }
