@@ -1,0 +1,45 @@
+// execute the terraform build  
+// input variables are the aws keys and the pc IP address
+
+node {  
+    
+// ---- initalize the terraform environment ----------------------
+
+    stage ('TF-Init') {
+    bat '''
+        call terraform init
+        EXIT /B 0
+    '''
+    }
+    
+//---------- build the AWS infrastructure for rancher --------------------
+
+    stage ('AWS-Build') { 
+        
+// input the secret data for the build -----------------------
+
+   def userInput = input(
+ id: 'userInput', message: 'Let\'s promote?', parameters: [
+ [$class: 'TextParameterDefinition', defaultValue: 'AKI', description: 'AWS Key', name: 'awskey'],
+ [$class: 'TextParameterDefinition', defaultValue: 'iGIMtY', description: 'AWS Secret Key', name: 'awsskey'],
+ [$class: 'TextParameterDefinition', defaultValue: '83.132.60.250', description: 'PC IP Address', name: 'pcip'],
+])
+echo ("AWS Key: "+userInput['awskey'])
+echo ("AWS Secret Key: "+userInput['awsskey'])
+echo ("PC IP Address: "+userInput['pcip'])
+
+ awsin = " -var access_key="+userInput['awskey'] + " -var secret_key="+userInput['awsskey'] + " -var my_ip_address="+userInput['pcip']
+
+echo ("PC IP Address: "+awsin ) 
+
+bat "terraform apply  "+awsin+" -auto-approve"
+    }
+
+// --------- setup the Rancher HA environment -------------------------------
+
+    stage('Kubernetes') {
+    bat "rke up --config rancher-cluster.yaml"
+}
+// ------------add the applications to the rancher cluster---------------------
+
+}
