@@ -3,8 +3,27 @@
  #  created by Graham Cann 29/05/2018
  #
  #-------------------------------------------------------------------------------
- 
- 
+ #-------------------------------------------------------------------------------
+ # move the state file to a versioned and replicated s3 bucket
+ #-------------------------------------------------------------------------------
+ terraform {
+  backend "s3" {
+    bucket = "rancher-v2-???????.cloud"
+    key    = "rancher-tf/tfstate"
+    region = "eu-central-1"
+  }
+}
+
+
+data "terraform_remote_state" "rancher" {
+  backend = "s3"
+  config {
+    bucket = "rancher-v2-?????.cloud"
+    key    = "rancher-tf/tfstate"
+    region = "eu-central-1"
+  }
+}
+
  #-------------------------------------------------------------------------------
  # aws variables for Rancher V2.0.0 HA Server environment
  # the keys are input and not stored in the configuration for security reasons.
