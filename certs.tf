@@ -43,20 +43,28 @@ resource "tls_self_signed_cert" "cert" {
 output "pcert" { value = "${base64encode(tls_self_signed_cert.cert.cert_pem)}"}	
          
 #-------------------------------------------------------------------------------
-# output to a file for reference 
+# output to a file for reference base64 encoded and the private pem file
 #-------------------------------------------------------------------------------
 
-resource "local_file" "pkey" {
+  resource "local_file" "pkey" {
     content     = "${base64encode(tls_private_key.p-key.private_key_pem)}"
     filename = "pkey64.base64"}
 	
+  resource "local_file" "pemkey" {
+    content     = "${tls_private_key.p-key.private_key_pem}"
+    filename = "rancherv2.pem"}	
 	
-	resource "local_file" "pcert" {
+  resource "local_file" "pcert" {
     content     = "${base64encode(tls_self_signed_cert.cert.cert_pem)}"
     filename = "pcert64.base64"}
+#-------------------------------------------------------------------------------
+# add the public key to aws
+#-------------------------------------------------------------------------------	
 	
-	
-	
+resource "aws_key_pair" "rancher" {
+  key_name   = "rancherv2"
+  public_key = "${tls_private_key.p-key.public_key_openssh}"
+  }	
 	
 	
 	

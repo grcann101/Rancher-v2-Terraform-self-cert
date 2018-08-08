@@ -51,7 +51,7 @@
  variable "az2" {default = "eu-central-1b"} 	# az for subnet b 
  variable "az3" {default = "eu-central-1c"} 	# az for subnet c 
  
- variable "cidr-az1" {default = "172.20.51.0/24"}  # cird for the subnet in az 1a give 4096 addresses
+ variable "cidr-az1" {default = "172.20.51.0/24"}  # cird for the subnet in az 1a give 256 addresses
  variable "cidr-az2" {default = "172.20.52.0/24"}  # cird for the subnet in az 1b
  variable "cidr-az3" {default = "172.20.53.0/24"}  # cird for the subnet in az 1c
  
@@ -59,8 +59,8 @@
  variable "sub-az2-name" {default = "rancher-1b"}  # az 1b
  variable "sub-az3-name" {default = "rancher-1c"}  # az 1c
  
- variable "internet-gateway" {default = "igw-043cd75c30653787e"}  # internet gateway id for the vpc
- variable "virtual-gateway" {default = "vgw-0169ca7cd3773efe4"}  # viryual gateway id for the vpc
+ variable "internet-gateway" {default = "igw-043cd75c30653787e"}  # internet gateway id for route table
+ variable "virtual-gateway" {default = "vgw-0169ca7cd3773efe4"}  # virtual gateway id for route table
  
  #-------------------------------------------------------------------------------
  #aws variables to change docker to a supported version for rancher
@@ -73,7 +73,7 @@
  #-------------------------------------------------------------------------------
  # logging variables 
  #-------------------------------------------------------------------------------
- variable "rancher-lb-log" {default = "rancher-v2-logs-greensill.cloud"}      # bucket for the load balancer log files
+ variable "rancher-lb-log" {default = "rancher-v2-logs-company.cloud"}      # bucket for the load balancer log files
 
  
  #------------------
