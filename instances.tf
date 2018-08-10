@@ -54,7 +54,7 @@ resource "aws_instance" "rancher-instance-1" {
 	timeout		=	"10m" 
 
  				}
-			  
+	depends_on = ["tls_private_key.p-key",]                       # depends on cert and python 
 }  # end of resource block
 
 	output "ip1" { value = "${aws_instance.rancher-instance-1.public_ip}"}			# output the IP address of the instance for use in the rke file
@@ -95,7 +95,7 @@ resource "aws_instance" "rancher-instance-2" {
 	timeout		=	"10m" 
  				}
 						  
- 
+ depends_on = ["tls_private_key.p-key",]            
 
 }  # end of resource block
 
@@ -137,7 +137,7 @@ resource "aws_instance" "rancher-instance-3" {
 	timeout		=	"10m" 
  				}
 						  
- 
+ depends_on = ["tls_private_key.p-key",]            
 
 }  # end of resource block
 
