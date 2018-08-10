@@ -50,7 +50,7 @@ resource "aws_instance" "rancher-instance-1" {
    connection {
     type     = "ssh"
     user     = "rancher"
-    private_key = "${file("rancherv2.pem")}"
+    private_key = "${tls_private_key.p-key.private_key_pem}"
 	timeout		=	"10m" 
 
  				}
@@ -91,7 +91,7 @@ resource "aws_instance" "rancher-instance-2" {
    connection {
     type     = "ssh"
     user     = "rancher"
-    private_key = "${file("rancherv2.pem")}"
+    private_key = "${tls_private_key.p-key.private_key_pem}"
 	timeout		=	"10m" 
  				}
 						  
@@ -133,7 +133,7 @@ resource "aws_instance" "rancher-instance-3" {
    connection {
     type     = "ssh"
     user     = "rancher"
-    private_key = "${file("rancherv2.pem")}"
+    private_key = "${tls_private_key.p-key.private_key_pem}"
 	timeout		=	"10m" 
  				}
 						  
